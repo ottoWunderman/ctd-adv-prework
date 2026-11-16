@@ -9,24 +9,94 @@
   <script src="app.js" defer></script>
 </head>
 <body>
-<header class="site-header">
+  <header class="site-header">
     <div class="container header-inner">
       <div class="brand">
-        <a href="index.html">
-            <h1>Weather &amp; Art</h1>
-        </a>
-        <p class="subtitle">Live Forecast with benefits</p>
+        <h1>Weather &amp; Art</h1>
+        <p class="subtitle">Live Forecast paired with the Art Institute of Chicago</p>
       </div>
+      <nav aria-label="Navigation" class="main-nav">
+        <button type="button" id="nav-mood" class="nav-btn active">
+          Weather &amp; Artworks
+        </button>
+        <button type="button" id="nav-artists" class="nav-btn">
+          Artists Directory
+        </button>
+      </nav>
     </div>
   </header>
+
   <main class="container">
+    <!-- Weather Search & Summary Section -->
     <section id="weather-section" class="weather-panel" aria-label="City Weather Search">
-<script>
-fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m")
-  .then((response) => response.json())
-  .then((json) => console.log(json));
-</script>
+      <form id="city-form" class="search-form">
+        <label for="city-input" class="visually-hidden">Enter a city name</label>
+        <input
+          type="text"
+          id="city-input"
+          placeholder="Enter city (e.g., Charlotte, Tokyo, London)..."
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn-primary">Update Weather &amp; Mood</button>
+      </form>
+
+      <div id="weather-card" class="weather-card" hidden>
+        <div class="weather-main">
+          <h2 id="weather-city">Charlotte, United States</h2>
+          <p id="weather-condition" class="weather-condition">Clear sky</p>
+        </div>
+        <div class="weather-metrics">
+          <div class="metric">
+            <span class="metric-label">Temperature</span>
+            <strong id="weather-temp">--</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Feels Like</span>
+            <strong id="weather-feels">--</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Wind</span>
+            <strong id="weather-wind">--</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Art Mood Theme</span>
+            <strong id="weather-mood-tag" class="mood-pill">--</strong>
+          </div>
+        </div>
+      </div>
     </section>
+
+    <!-- Status, Loader & Error Feedback -->
+    <div class="status-bar">
+      <p id="view-heading" class="view-heading" aria-live="polite"></p>
+    </div>
+
+    <div id="loader" class="loader" hidden role="status">
+      Fetching data from API...
+    </div>
+
+    <div id="error-box" class="error-box" hidden role="alert"></div>
+
+    <!-- Dynamic Content -->
+    <section id="content-area" class="content-area" aria-live="polite"></section>
+
+    <!-- Pagination for Artists Directory -->
+    <nav id="pagination" class="pagination" aria-label="Artists Pagination" hidden>
+      <button type="button" id="prev-btn" class="btn btn-secondary">&larr; Previous</button>
+      <span id="page-indicator" class="page-indicator">Page 1</span>
+      <button type="button" id="next-btn" class="btn btn-secondary">Next &rarr;</button>
+    </nav>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        Weather data by
+        <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>
+        &bull; Artwork &amp; Artist data by
+        <a href="https://api.artic.edu/docs/" target="_blank" rel="noopener noreferrer">Art Institute of Chicago API</a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
